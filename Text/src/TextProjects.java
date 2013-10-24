@@ -7,16 +7,25 @@ import java.util.*;
  */
 public class TextProjects {
 
-	private static List<String> games = new ArrayList<String>(); // Keeps track of all the games
-	
+	private static List<String> games; // Keeps track of all the games
+	private static List<Character> vowels;
 	/**
 	 * The command center for all of the files
 	 */
 	public static void main(String[] args) {
+		games = new ArrayList<String>();
 		games.add("'Q': to quit");
 		games.add("Reverse String");
 		games.add("Recursive Reverse String");
 		games.add("Pig Latin");
+		games.add("Vowel Counter");
+		
+		vowels = new ArrayList<Character>();
+		vowels.add('a');
+		vowels.add('e');
+		vowels.add('i');
+		vowels.add('o');
+		vowels.add('u');
 		
 		Scanner console = new Scanner(System.in);
 		printInfo();
@@ -31,6 +40,8 @@ public class TextProjects {
 				recursiveReverse(word);
 			} else if(game.equals("3")) {
 				pigLatin(word);
+			} else if(game.equals("4")) {
+				vowelCounter(word);
 			}
 			
 			System.out.println();
@@ -96,14 +107,7 @@ public class TextProjects {
 	 * @return the beginning consonants of a word
 	 */
 	private static String getConsonants(String word) {
-		ArrayList<Character> vowels = new ArrayList<Character>();
-		vowels.add('a');
-		vowels.add('e');
-		vowels.add('i');
-		vowels.add('o');
-		vowels.add('u');
 		vowels.add('y');
-		
 		String consonants = "";
 		if (word.charAt(0) == 'y') {
 			consonants = "y";
@@ -114,7 +118,34 @@ public class TextProjects {
 			consonants += word.charAt(0); 
 			word = word.substring(1);
 		}
+		vowels.remove('y');
 		return consonants;
+	}
+	
+	/**
+	 * Counts all the vowels in a word and the number of characters hit
+	 * @param word - word that vowels will be counted
+	 */
+	public static void vowelCounter(String word) {
+		Map<Character, Integer> vowelCount = new TreeMap<Character, Integer>();
+		int count = 0;
+		
+		for (int i = 0; i < word.length(); i++) {
+			char character = word.charAt(i);
+			if (vowels.contains(character)) {
+				count++;
+				if (vowelCount.containsKey(character)) {
+					vowelCount.put(character, vowelCount.get(character) + 1);
+				} else {
+					vowelCount.put(character, 1);
+				}
+			}
+		}
+		
+		System.out.println(count + " vowels");
+		for (Character c : vowelCount.keySet()) {
+			System.out.println(c + " appeared " + vowelCount.get(c) + " times");
+		}
 	}
 
 }
