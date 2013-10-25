@@ -8,7 +8,7 @@ import java.util.*;
 public class TextProjects {
 
 	private static List<String> games; // Keeps track of all the games
-	private static List<Character> vowels;
+	public static List<Character> vowels;
 	/**
 	 * The command center for all of the files
 	 */
@@ -107,18 +107,17 @@ public class TextProjects {
 	 * @return the beginning consonants of a word
 	 */
 	private static String getConsonants(String word) {
-		vowels.add('y');
 		String consonants = "";
-		if (word.charAt(0) == 'y') {
+		char character = word.charAt(0);
+		if (character == 'y') {
 			consonants = "y";
 			word = word.substring(1);
 		}
 		
-		while (word.length() > 0 && !vowels.contains(word.charAt(0))) {
+		while (word.length() > 0 && (!vowels.contains(word.charAt(0)) || character == 'y')) {
 			consonants += word.charAt(0); 
 			word = word.substring(1);
 		}
-		vowels.remove('y');
 		return consonants;
 	}
 	
